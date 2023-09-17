@@ -11,12 +11,14 @@ use mysql_xdevapi\Table;
 class Desk extends Model
 {
     use HasFactory;
-    protected $table = 'desks';
+
+    protected $fillable = ['name'];
 
     public static function findOrFail($id)
     {
         return DB::table('desks')->find($id);
     }
+
     public function lists(): HasMany
     {
         return $this->hasMany(DeskList::class);

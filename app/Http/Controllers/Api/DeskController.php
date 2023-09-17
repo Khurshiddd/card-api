@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Desk\StoreRequest;
+use App\Http\Requests\Desk\UpdateRequest;
 use App\Http\Resources\DeskResource;
 use App\Models\Desk;
-use Illuminate\Http\Request;
+use Exception;
 
 class DeskController extends Controller
 {
@@ -21,10 +23,16 @@ class DeskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request): \Illuminate\Http\JsonResponse
     {
-        //
+        try {
+            Desk::create($request->validated());
+            return $this->success('desk created');
+        } catch (Exception $e) {
+            return $this->error('something went wrong');
+        }
     }
+
 
     /**
      * Display the specified resource.
@@ -38,9 +46,14 @@ class DeskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRequest $request, Desk $desk): \Illuminate\Http\JsonResponse
     {
-        //
+        try {
+            $desk->update($request->validated());
+            return $this->success('succesfully update desk');
+        }catch (Exception){
+            return $this->error('something went wrong');
+        }
     }
 
     /**
