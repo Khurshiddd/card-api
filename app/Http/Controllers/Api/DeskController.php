@@ -59,9 +59,13 @@ class DeskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Desk $desk): \Illuminate\Http\JsonResponse
+    public function destroy(Desk1 $desk): \Illuminate\Http\JsonResponse
     {
-        $desk->delete();
-        return $this->success('successfully delete desk');
+        try {
+            $desk->delete();
+            return $this->success('successfully delete desk');
+        }catch (Exception $e){
+            return $this->error("can not delete desk");
+        }
     }
 }
