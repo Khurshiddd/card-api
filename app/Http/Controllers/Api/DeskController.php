@@ -16,7 +16,7 @@ class DeskController extends Controller
      */
     public function index(): \Illuminate\Http\JsonResponse
     {
-        $data = Desk::with('lists')->get();
+        $data = Desk::with('lists')->latest()->get();
         return $this->response(DeskResource::collection($data));
     }
 
@@ -59,7 +59,7 @@ class DeskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Desk1 $desk): \Illuminate\Http\JsonResponse
+    public function destroy(Desk $desk): \Illuminate\Http\JsonResponse
     {
         try {
             $desk->delete();
