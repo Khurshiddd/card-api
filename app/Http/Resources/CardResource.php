@@ -2,11 +2,10 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Desk;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DeskResource extends JsonResource
+class CardResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,8 +17,9 @@ class DeskResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'desk_list_id' => $this->desk_list_id,
             'created_at' => $this->created_at,
-            'lists' => DeskListResource::collection($this->lists)
+
         ];
     }
 }

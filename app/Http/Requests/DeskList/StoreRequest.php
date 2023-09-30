@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\DeskList;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DeskListStoreRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class DeskListStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:255|unique:desk_lists,name',
+            'name' => 'required|max:255',
             'desk_id' => 'required|max:255|exists:desks,id'
         ];
     }

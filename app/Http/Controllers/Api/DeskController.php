@@ -16,8 +16,14 @@ class DeskController extends Controller
      */
     public function index(): \Illuminate\Http\JsonResponse
     {
-        $data = Desk::with('lists')->latest()->get();
-        return $this->response(DeskResource::collection($data));
+        if (Desk::all()->count()%15 == 0){
+            $info = Desk::all()->count()/15;
+        }else {
+            $info = Desk::all()->count()/15+1;
+        }
+
+        $data = Desk::with('lists')->latest()->paginate(15);
+        return $this->response(DeskResource::collection($data),round($info,0));
     }
 
     /**
