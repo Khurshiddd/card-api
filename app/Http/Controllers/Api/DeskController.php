@@ -8,6 +8,7 @@ use App\Http\Requests\Desk\UpdateRequest;
 use App\Http\Resources\DeskResource;
 use App\Models\Desk;
 use Exception;
+use phpDocumentor\Reflection\Types\Float_;
 
 class DeskController extends Controller
 {
@@ -16,14 +17,18 @@ class DeskController extends Controller
      */
     public function index(): \Illuminate\Http\JsonResponse
     {
-        if (Desk::all()->count()%15 == 0){
-            $info = Desk::all()->count()/15;
-        }else {
-            $info = Desk::all()->count()/15+1;
+        if (Desk::all()->count() % 15 == 0) {
+            $info = Desk::all()->count() / 15;
+        } else {
+            $info = Desk::all()->count() / 15;
+            $numberAsString = (string)$info;
+            if ($numberAsString[2] < 5){
+                $info = Desk::all()->count() / 15 + 1;
+            }
         }
 
         $data = Desk::with('lists')->latest()->paginate(15);
-        return $this->response(DeskResource::collection($data),round($info,0));
+        return $this->response(DeskResource::collection($data), round($info, 0));
     }
 
     /**
@@ -57,7 +62,7 @@ class DeskController extends Controller
         try {
             $desk->update($request->validated());
             return $this->success('succesfully update desk');
-        }catch (Exception){
+        } catch (Exception) {
             return $this->error('something went wrong');
         }
     }
@@ -70,7 +75,7 @@ class DeskController extends Controller
         try {
             $desk->delete();
             return $this->success('successfully delete desk');
-        }catch (Exception $e){
+        } catch (Exception $e) {
             return $this->error("can not delete desk");
         }
     }
