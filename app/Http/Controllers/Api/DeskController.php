@@ -19,7 +19,11 @@ class DeskController extends Controller
         if (Desk::all()->count()%15 == 0){
             $info = Desk::all()->count()/15;
         }else {
-            $info = Desk::all()->count()/15+1;
+            $info = Desk::all()->count() / 15;
+            $numberAsString = (string)$info;
+            if ($numberAsString[2] < 5){
+                $info = Desk::all()->count() / 15 + 1;
+            }
         }
 
         $data = Desk::with('lists')->latest()->paginate(15);
