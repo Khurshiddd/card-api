@@ -16,6 +16,15 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/',function (){
-   view('welcome');
+Route::get('/', function () {
+    view('welcome');
+});
+
+Route::get('test-sql/{id}', function ($id) {
+
+    $data = \DB::table('users as u')
+        ->join('profile as p', 'u.id', '=', 'p.user_id')
+        ->select('u.name', 'u.email', 'p.photo', 'p.bio', 'p.birth_date')->get();
+    return view('test', ['data'=>$data]);
+
 });
